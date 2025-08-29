@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist", // 编译输出目录
+    "rootDir": "./src", // 源码目录
+    "declaration": true, // 生成类型声明文件
+    "module": "commonjs", // 编译为 CommonJS（前后端都可用）
+    "target": "ES2019",
+    "strict": true
+  }
+}
