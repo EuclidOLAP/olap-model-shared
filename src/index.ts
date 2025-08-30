@@ -47,7 +47,7 @@ export interface User {
 //   PRIMARY KEY (`gid`)
 // ) ENGINE=InnoDB AUTO_INCREMENT=500000000000008 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 export interface Cube {
-  gid: number; // 主键，自增
+  gid?: number; // 主键，自增
   code?: string; // 可选，实体编码
   name: string; // 实体名称
   alias?: string; // 可选别名
