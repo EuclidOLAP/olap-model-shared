@@ -58,3 +58,20 @@ export interface Cube {
   updated_by?: number; // 更新人ID
   description?: string; // 描述
 }
+
+// CREATE TABLE `user_olap_model_access` ( `user_name` VARCHAR(255) NOT NULL COMMENT '' , --
+//  `olap_entity_gid` BIGINT UNSIGNED NOT NULL COMMENT '' , --
+//  `has_access` BOOLEAN DEFAULT FALSE COMMENT '' , --
+//  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The time when the entity was created.' , -- 实体被创建的时间。
+//  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'The time when the entity was last modified.' , -- 实体最新被修改的时间。
+//  `created_by` BIGINT UNSIGNED DEFAULT 0 COMMENT 'The ID of the user who created the entity.' , -- 创建实体的用户的ID。
+//  `updated_by` BIGINT UNSIGNED DEFAULT 0 COMMENT 'The ID of the user who last modified the entity.' , -- 最后修改实体的用户的ID。
+//  `description` TEXT COMMENT 'Description of the entity.' , -- 实体的描述信息。
+//  `ext_field_1` VARCHAR(255), `ext_field_2` VARCHAR(255), `ext_field_3` VARCHAR(255), `ext_field_4` VARCHAR(255), `ext_field_5` VARCHAR(255), `ext_field_6` VARCHAR(255), `ext_field_7` VARCHAR(255), `ext_field_8` VARCHAR(255), `ext_field_9` VARCHAR(255),
+//  `ext_field_10` VARCHAR(255)
+//  ) ;
+export interface UserOlapModelAccess {
+  user_name: string;
+  olap_entity_gid: number;
+  has_access: boolean;
+}
