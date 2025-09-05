@@ -60,6 +60,8 @@ export interface Cube {
 }
 
 // CREATE TABLE `user_olap_model_access` ( `user_name` VARCHAR(255) NOT NULL COMMENT '' , --
+//  `permission_scope` VARCHAR(255) COMMENT 'Describes the scope of the permission, e.g., cube, dimensionRole, or member(role).' , -- Describes the scope of the permission, e.g., cube, dimensionRole, or member(role).
+//  `dimension_role_gid` BIGINT UNSIGNED COMMENT 'When the value of this field is meaningful, it indicates that the entity access permissions are set within the scope of this dimension role.' , -- 当此字段值有意义时，表示是在此维度角色范围内设置实体访问权限。
 //  `olap_entity_gid` BIGINT UNSIGNED NOT NULL COMMENT '' , --
 //  `has_access` BOOLEAN DEFAULT FALSE COMMENT '' , --
 //  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'The time when the entity was created.' , -- 实体被创建的时间。
@@ -72,6 +74,8 @@ export interface Cube {
 //  ) ;
 export interface UserOlapModelAccess {
   user_name: string;
+  permission_scope?: string;
+  dimension_role_gid?: number;
   olap_entity_gid: number;
   has_access: boolean;
 }
