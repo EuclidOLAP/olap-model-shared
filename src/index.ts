@@ -80,4 +80,9 @@ export interface UserOlapModelAccess {
   dimension_role_gid?: number;
   olap_entity_gid: number;
   has_access: boolean;
+
+  // does not in DB table
+  full_path_text?: string;
+
+  getFullPathText(): string;
 }
