@@ -86,3 +86,26 @@ export interface UserOlapModelAccess {
 
   // getFullPathText(): string;
 }
+
+// 定义 enum 和方法都在一个 class 中
+export class OlapEntityTypeChecker {
+  // enum 放在 class 中
+  static enum = {
+    Member: 3,
+    CalculatedMetric: 7,
+  } as const;
+
+  // 明确指定返回类型为 number
+  static check(olap_obj_gid: number): number {
+    if (olap_obj_gid >= 700000000000001) {
+      return OlapEntityTypeChecker.enum.CalculatedMetric;
+    } else if (olap_obj_gid >= 300000000000001) {
+      return OlapEntityTypeChecker.enum.Member;
+    }
+
+    // 抛出异常：无效的 olap_obj_gid
+    throw new Error(
+      `Invalid olap_obj_gid: ${olap_obj_gid}. The value does not match any valid type.`
+    );
+  }
+}
