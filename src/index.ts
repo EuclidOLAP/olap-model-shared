@@ -84,5 +84,5 @@ export interface UserOlapModelAccess {
   // does not in DB table
   full_path_text?: string;
 
-  getFullPathText(): string;
+  // getFullPathText(): string;
 }
