@@ -109,3 +109,30 @@ export class OlapEntityTypeChecker {
     );
   }
 }
+
+export class ResponseResult {
+  success: boolean;
+  message: string;
+  data: any;
+  error: any;
+
+  private constructor(
+    success: boolean,
+    message: string,
+    data: any = null,
+    error: any = null
+  ) {
+    this.success = success;
+    this.message = message;
+    this.data = data;
+    this.error = error;
+  }
+
+  static ok(data: any, message: string = "successful"): ResponseResult {
+    return new ResponseResult(true, message, data);
+  }
+
+  static err(error: any = null, message: string = "failed"): ResponseResult {
+    return new ResponseResult(false, message, null, error);
+  }
+}
