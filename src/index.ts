@@ -59,6 +59,35 @@ export interface Cube {
   description?: string; // 描述
 }
 
+// #####################################################################################
+// ##                            Start for defining Member                            ##
+// #####################################################################################
+
+export interface Member {
+  gid: number;
+  code?: string;
+  name: string;
+  alias?: string;
+  display?: string;
+  dimensionGid: number;
+  hierarchyGid: number;
+  levelGid: number;
+  level: number;
+  parentGid: number;
+  measureIndex: number;
+  leaf: boolean;
+  fullPath: Uint8Array;
+  // created_at?: Date;
+  // updated_at?: Date;
+  created_by?: number;
+  updated_by?: number;
+  description?: string;
+}
+
+// #####################################################################################
+// ##                            End for defining Member                              ##
+// #####################################################################################
+
 // CREATE TABLE `user_olap_model_access` ( `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '' , --
 //  `user_name` VARCHAR(255) NOT NULL COMMENT '' , --
 //  `permission_scope` VARCHAR(255) COMMENT 'Describes the scope of the permission, e.g., cube, dimensionRole, or member(role).' , -- Describes the scope of the permission, e.g., cube, dimensionRole, or member(role).
