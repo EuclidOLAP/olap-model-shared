@@ -4,7 +4,8 @@
     "rootDir": "./src", // 源码目录
     "declaration": true, // 生成类型声明文件
     "module": "commonjs", // 编译为 CommonJS（前后端都可用）
-    "target": "ES2019",
-    "strict": true
+    "target": "ES2020", // 将目标版本更新为 ES2020 或更高
+    "lib": ["es2020", "dom"], // 添加 dom 库，确保可以使用浏览器的 API，如 console
+    "strict": true // 开启严格模式
   }
 }

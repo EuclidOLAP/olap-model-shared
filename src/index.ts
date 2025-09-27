@@ -1,3 +1,53 @@
+export class OlapModelUtil {
+  /**
+   * 将8字节的Uint8Array转换为无符号64位整数
+   * @param bytes 长度为8的Uint8Array
+   * @returns 无符号64位整数的字符串表示
+   * @throws 如果输入的字节数组长度不是8则抛出错误
+   */
+  static bytesToUint64(bytes: Uint8Array): string {
+    if (bytes.length !== 8) {
+      throw new Error("输入必须是8字节的Uint8Array");
+    }
+
+    // 处理大端字节序 (Most Significant Byte first)
+    // 计算高32位和低32位
+    let high = (bytes[0] << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3];
+
+    let low = (bytes[4] << 24) | (bytes[5] << 16) | (bytes[6] << 8) | bytes[7];
+
+    // 转换为BigInt以避免精度丢失
+    const highBig = BigInt(high >>> 0); // 无符号右移确保视为无符号数
+    const lowBig = BigInt(low >>> 0);
+
+    // 计算完整的64位值: (high << 32) + low
+    const result = (highBig << 32n) | lowBig;
+
+    return result.toString();
+  }
+
+  static gidFullPath_uint8Arr_into_uint64Arr(bytes: Uint8Array): number[] {
+    const uint64Arr: number[] = [];
+
+    // 每次处理 8 个字节
+    for (let i = 0; i < bytes.length; i += 8) {
+      // 获取当前的 8 个字节（如果字节数不足 8 个，这里我们将不足的部分直接跳过）
+      const chunk = bytes.slice(i, i + 8);
+
+      // 倒序排列字节
+      const reversedChunk = chunk.reverse();
+
+      // 调用 bytesToUint64 方法，把 reversedChunk 转换为 uint64 字符串
+      const uint64Str = this.bytesToUint64(reversedChunk);
+
+      // 将 uint64 字符串转换为数字并添加到 uint64Arr 数组中
+      uint64Arr.push(Number(uint64Str));
+    }
+
+    return uint64Arr;
+  }
+}
+
 // CREATE TABLE `user` (
 //   `user_name` varchar(255) NOT NULL,
 //   `pswd_hash` varchar(255) NOT NULL COMMENT 'Hashed password for security.',
