@@ -134,6 +134,88 @@ export interface Member {
   description?: string;
 }
 
+export interface FormulaMember {
+  gid: number;
+  name: string;
+  dimensionRoleGid: number;
+  mountPointGid: number;
+  exp: string;
+}
+
+export interface DimensionRole {
+  gid: number;
+  dimensionGid: number;
+  name: string;
+  cubeGid: number;
+}
+
+export function dimensionRoleFromRaw(raw: any): DimensionRole {
+  return {
+    gid: raw.gid,
+    dimensionGid: raw.dimensionGid,
+    name: raw.name,
+    cubeGid: raw.cubeGid,
+  };
+}
+
+export function formulaMemberFromRaw(raw: any): FormulaMember {
+  return {
+    gid: raw.gid,
+    name: raw.name,
+    dimensionRoleGid: raw.dimensionRoleGid,
+    mountPointGid: raw.mountPointGid,
+    exp: raw.exp,
+  };
+}
+
+export function memberFromRaw(raw: any): Member {
+  return {
+    gid: raw.gid,
+    code: raw.code,
+    name: raw.name,
+    alias: raw.alias,
+    display: raw.display,
+    dimensionGid: raw.dimensionGid,
+    hierarchyGid: raw.hierarchyGid,
+    levelGid: raw.levelGid,
+    level: raw.level,
+    parentGid: raw.parentGid,
+    measureIndex: raw.measureIndex,
+    leaf: Boolean(raw.leaf),
+    fullPath:
+      raw.fullPath instanceof Uint8Array
+        ? raw.fullPath
+        : raw.fullPath
+          ? Uint8Array.from(raw.fullPath as ArrayLike<number>)
+          : new Uint8Array(),
+    created_by: raw.created_by,
+    updated_by: raw.updated_by,
+    description: raw.description,
+  };
+}
+
+export class MemberRole {
+  dimensionRole: DimensionRole;
+  member: Member | FormulaMember;
+
+  constructor(dimensionRole: DimensionRole, member: Member | FormulaMember) {
+    this.dimensionRole = dimensionRole;
+    this.member = member;
+  }
+
+  toMdxFragment(): string {
+    return `&${this.dimensionRole.gid}[${this.dimensionRole.name}].&${this.member.gid}[${(this.member as any).name}]`;
+  }
+
+  static fromRaw(raw: any): MemberRole {
+    const dimensionRole = dimensionRoleFromRaw(raw.dimensionRole);
+    const member = raw.member && raw.member.isFormula
+      ? formulaMemberFromRaw(raw.member)
+      : memberFromRaw(raw.member);
+    return new MemberRole(dimensionRole, member);
+  }
+}
+
 // #####################################################################################
 // ##                            End for defining Member                              ##
 // #####################################################################################
