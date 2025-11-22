@@ -216,6 +216,36 @@ export class MemberRole {
   }
 }
 
+export class Tuple {
+  memberRoles: MemberRole[];
+
+  constructor(memberRoles: MemberRole[]) {
+    this.memberRoles = memberRoles;
+  }
+
+  push(memberRole: MemberRole) {
+    this.memberRoles.push(memberRole);
+  }
+
+  toTupleString(): string {
+    const memberRoleStrings = this.memberRoles.map((mr) => mr.toMdxFragment()).join(", ");
+    return `(${memberRoleStrings})`;
+  }
+
+  static toMdxFragment(tuples: Tuple[]): string {
+    const tupleStrings = tuples.map((tuple) => {
+      const memberRoleStrings = tuple.memberRoles.map((mr) => mr.toMdxFragment()).join(", ");
+      return `(${memberRoleStrings})`;
+    });
+    return `{${tupleStrings.join(", ")}}`;
+  }
+
+  static fromRaw(raw: any): Tuple {
+    const memberRoles = raw.memberRoles.map((mr: any) => MemberRole.fromRaw(mr));
+    return new Tuple(memberRoles);
+  }
+}
+
 // #####################################################################################
 // ##                            End for defining Member                              ##
 // #####################################################################################
